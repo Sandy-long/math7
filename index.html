@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加减法巧算二</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            font-size: 1.8em;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+            border-left: 4px solid #3498db;
+            padding-left: 8px;
+            font-size: 1.4em;
+        }
+        h3 {
+            color: #16a085;
+            margin-top: 18px;
+            font-size: 1.2em;
+        }
+        .section {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .question {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 12px;
+            font-size: 0.95em;
+        }
+        .answer {
+            color: #27ae60;
+            margin-bottom: 12px;
+            padding-left: 15px;
+            border-left: 2px solid #2ecc71;
+            font-size: 0.95em;
+        }
+        .rule {
+            background-color: #f1f9fe;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 8px 0;
+            border-left: 3px solid #3498db;
+            font-size: 0.95em;
+        }
+        .example {
+            background-color: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        
+        /* 括号规则动画 */
+        .bracket-animation {
+            width: 100%;
+            height: 120px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bracket-equation {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .bracket {
+            font-size: 2em;
+            color: #e74c3c;
+            animation: bounce 2s infinite;
+        }
+        
+        .highlight {
+            color: #2980b9;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .explanation {
+            position: absolute;
+            bottom: 10px;
+            font-size: 0.8em;
+            color: #7f8c8d;
+            text-align: center;
+            width: 100%;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        /* 连续运算动画 */
+        .subtraction-animation {
+            width: 100%;
+            height: 120px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subtraction-equation {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .minus-sign {
+            color: #e74c3c;
+            margin: 0 5px;
+            animation: shake 1s infinite;
+        }
+        
+        .sum-highlight {
+            color: #27ae60;
+            font-weight: bold;
+            animation: glow 2s infinite;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 5px rgba(39, 174, 96, 0.5); }
+            50% { text-shadow: 0 0 10px rgba(39, 174, 96, 0.8); }
+        }
+        
+        /* 平面图形动画 */
+        .shape-animation {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 100px solid #3498db;
+            position: relative;
+            animation: rotate 8s infinite linear;
+        }
+        
+        .right-angle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #e74c3c;
+            bottom: -100px;
+            left: -10px;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 周长计算动画 */
+        .perimeter-animation {
+            width: 100%;
+            height: 150px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .rectangle {
+            width: 120px;
+            height: 80px;
+            border: 3px solid #2980b9;
+            position: relative;
+        }
+        
+        .length-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .width-label {
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            color: #27ae60;
+        }
+        
+        .perimeter-path {
+            position: absolute;
+            width: 120px;
+            height: 80px;
+            border: 2px dashed #8e44ad;
+            animation: perimeterPulse 3s infinite;
+        }
+        
+        @keyframes perimeterPulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 0.3; }
+        }
+        
+        /* 网格计数动画 */
+        .grid-animation {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 2px;
+            width: 160px;
+            height: 160px;
+        }
+        
+        .grid-cell {
+            background-color: #3498db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            animation: cellPulse 3s infinite;
+            animation-delay: calc(var(--delay) * 0.2s);
+        }
+        
+        .star-cell {
+            background-color: #e74c3c;
+        }
+        
+        .star {
+            font-size: 1.2em;
+            animation: starTwinkle 1.5s infinite;
+        }
+        
+        @keyframes cellPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+        
+        /* 竖式谜题动画 */
+        .vertical-animation {
+            width: 100%;
+            height: 150px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .vertical-equation {
+            font-family: monospace;
+            font-size: 1.5em;
+            text-align: right;
+            margin: 10px;
+        }
+        
+        .digit {
+            display: inline-block;
+            width: 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .unknown-digit {
+            color: #e74c3c;
+            font-weight: bold;
+            animation: digitFlash 2s infinite;
+        }
+        
+        .carry {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+            color: #27ae60;
+            animation: carryBounce 1.5s infinite;
+        }
+        
+        @keyframes digitFlash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes carryBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* 立体图形动画 */
+        .cube-animation {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+        
+        .cube {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: cubeRotate 10s infinite linear;
+        }
+        
+        .cube-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #333;
+            background-color: rgba(52, 152, 219, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: white;
+        }
+        
+        .front { transform: translateZ(50px); }
+        .back { transform: rotateY(180deg) translateZ(50px); }
+        .right { transform: rotateY(90deg) translateZ(50px); }
+        .left { transform: rotateY(-90deg) translateZ(50px); }
+        .top { transform: rotateX(90deg) translateZ(50px); }
+        .bottom { transform: rotateX(-90deg) translateZ(50px); }
+        
+        .vertex {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #e74c3c;
+            border-radius: 50%;
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes cubeRotate {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+        
+        /* 涂色问题动画 */
+        .paint-animation {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .small-cube {
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            background-color: #3498db;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .painted {
+            background-color: #e74c3c;
+            animation: paintPulse 2s infinite;
+        }
+        
+        .painted-3 {
+            box-shadow: 0 0 0 3px #e74c3c;
+            animation: paintFlash 3s infinite;
+        }
+        
+        @keyframes paintPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        @keyframes paintFlash {
+            0%, 100% { box-shadow: 0 0 0 3px #e74c3c; }
+            50% { box-shadow: 0 0 0 6px #e74c3c; }
+        }
+        
+        /* 巧填算符动画 */
+        .operator-animation {
+            width: 100%;
+            height: 120px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .operator-equation {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .operator {
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 0 5px;
+            animation: operatorChange 3s infinite;
+        }
+        
+        @keyframes operatorChange {
+            0% { content: "+"; }
+            50% { content: "-"; }
+            100% { content: "+"; }
+        }
+        
+        /* 整数分拆动画 */
+        .split-animation {
+            width: 100%;
+            height: 150px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .number-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.5em;
+            position: relative;
+            animation: numberPulse 2s infinite;
+        }
+        
+        .split-arrow {
+            font-size: 1.5em;
+            margin: 0 10px;
+            color: #e74c3c;
+            animation: arrowBounce 1.5s infinite;
+        }
+        
+        .split-part {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin: 0 5px;
+            animation: partFloat 3s infinite;
+            animation-delay: calc(var(--delay) * 0.3s);
+        }
+        
+        .unique-part {
+            background-color: #f39c12;
+        }
+        
+        @keyframes numberPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes partFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 倒推法动画 */
+        .reverse-animation {
+            width: 100%;
+            height: 200px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            margin: 15px 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .reverse-steps {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .reverse-step {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 15px;
+            position: relative;
+            animation: stepHighlight 4s infinite;
+            animation-delay: calc(var(--delay) * 0.5s);
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .reverse-arrow {
+            font-size: 1.5em;
+            color: #e74c3c;
+            animation: arrowFlip 2s infinite;
+            margin: 5px 0;
+        }
+        
+        .reverse-box {
+            width: 60px;
+            height: 60px;
+            background-color: #2ecc71;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            border-radius: 10px;
+            animation: boxPulse 2s infinite;
+        }
+        
+        @keyframes stepHighlight {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+        
+        @keyframes arrowFlip {
+            0% { transform: rotateY(0); }
+            50% { transform: rotateY(180deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        @keyframes boxPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>趣味数学7</h1>
+    
+    <div class="section">
+        <h2>1. 括号规则</h2>
+        
+        <!-- 修正后的括号规则动画 -->
+        <div class="bracket-animation">
+            <div class="bracket-equation">
+                <span class="bracket">(</span>
+                <span class="highlight">69 - 19</span>
+                <span class="bracket">)</span>
+                <span> = 50</span>
+            </div>
+            <div class="explanation">括号内的运算优先计算</div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>括号内运算先算，注意加减号变化。
+        </div>
+        
+        <div class="example">
+            <div class="question">268 + (69 - 19) 等于多少？</div>
+            <div class="answer">318 </div>
+            
+            <div class="question">500 - (200 + 100) 等于多少？</div>
+            <div class="answer">200 </div>
+            
+            <div class="question">(120 - 20) + 30 等于多少？</div>
+            <div class="answer">130 </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. 连续运算</h2>
+        
+        <!-- 修正后的连续运算动画 -->
+        <div class="subtraction-animation">
+            <div class="subtraction-equation">
+                <span>386 - (</span>
+                <span class="highlight">13 + 10 + 17</span>
+                <span>) = </span>
+                <span class="sum-highlight">40</span>
+                <span> → 386 - 40 = 346</span>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>连续减法转化为减去总和。
+        </div>
+        
+        <div class="example">
+            <div class="question">386 - 13 - 10 - 17 等于多少？</div>
+            <div class="answer">346 </div>
+            
+            <div class="question">250 - 50 - 20 等于多少？</div>
+            <div class="answer">180 </div>
+            
+            <div class="question">100 - 30 - 40 - 20 等于多少？</div>
+            <div class="answer">10 </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>平面图形认知</h2>
+        
+        <h3>图形分类</h3>
+        
+        <!-- 修正后的图形分类动画 -->
+        <div class="shape-animation">
+            <div class="triangle">
+                <div class="right-angle"></div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>
+            等腰三角形有两边相等。<br>
+            直角三角形有一个角为90度。
+        </div>
+        
+        <div class="example">
+            <div class="question">一个三角形有两边相等，它是什么三角形？</div>
+            <div class="answer">等腰三角形</div>
+            
+            <div class="question">一个三角形有一个内角是90度，它是什么三角形？</div>
+            <div class="answer">直角三角形</div>
+            
+            <div class="question">等腰三角形的两个底角相等吗？</div>
+            <div class="answer">是</div>
+        </div>
+        
+        <h3>周长计算</h3>
+        
+        <div class="perimeter-animation">
+            <div class="rectangle">
+                <div class="perimeter-path"></div>
+                <div class="length-label">长: 5cm</div>
+                <div class="width-label">宽: 3cm</div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>长方形周长 = 2 × (长 + 宽)。
+        </div>
+        
+        <div class="example">
+            <div class="question">长5cm，宽3cm的长方形周长是多少？</div>
+            <div class="answer">16cm</div>
+            
+            <div class="question">长7cm，宽4cm的长方形周长是多少？</div>
+            <div class="answer">22cm</div>
+            
+            <div class="question">长方形长10cm，宽8cm，周长是多少？</div>
+            <div class="answer">36cm</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>分类数图形</h2>
+        
+        <h3>复杂图形计数</h3>
+        
+        <div class="grid-animation">
+            <div class="grid-container">
+                <div class="grid-cell" style="--delay: 0">1</div>
+                <div class="grid-cell" style="--delay: 1">2</div>
+                <div class="grid-cell" style="--delay: 2">3</div>
+                <div class="grid-cell" style="--delay: 3">4</div>
+                <div class="grid-cell star-cell" style="--delay: 4"><span class="star">★</span></div>
+                <div class="grid-cell" style="--delay: 5">6</div>
+                <div class="grid-cell" style="--delay: 6">7</div>
+                <div class="grid-cell" style="--delay: 7">8</div>
+                <div class="grid-cell" style="--delay: 8">9</div>
+                <div class="grid-cell star-cell" style="--delay: 9"><span class="star">★</span></div>
+                <div class="grid-cell" style="--delay: 10">11</div>
+                <div class="grid-cell" style="--delay: 11">12</div>
+                <div class="grid-cell" style="--delay: 12">13</div>
+                <div class="grid-cell" style="--delay: 13">14</div>
+                <div class="grid-cell star-cell" style="--delay: 14"><span class="star">★</span></div>
+                <div class="grid-cell" style="--delay: 15">16</div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>计算重叠图形时，要考虑所有可能的组合与重复部分。
+        </div>
+        
+        <div class="example">
+            <div class="question">4×4网格中共有多少个正方形？</div>
+            <div class="answer">20个</div>
+            
+            <div class="question">3×3网格中共有多少个正方形？</div>
+            <div class="answer">14个</div>
+            
+            <div class="question">5×5网格中共有多少个正方形？</div>
+            <div class="answer">55个</div>
+        </div>
+        
+        <h3>包含特定元素</h3>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>统计包含指定标记（如"★"）的图形个数时，要逐个判断每个图形是否含该元素。
+        </div>
+        
+        <div class="example">
+            <div class="question">一个 4×4 网格中，每行都有 2 个“★”，其余是空格。
+共有多少个格子里有“★”？</div>
+            <div class="answer">8个</div>
+            
+            <div class="question">若每行有2个"★"，4行共多少含"★"的正方形？</div>
+            <div class="answer">8个。</div>
+            
+            <div class="question">一个由小三角形拼成的大图，有些三角形中有“★”。
+其中一个三角形中同时包含了3个“★”，共有27个。这样的三角形有几个？</div>
+            <div class="answer">9个</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>加减法竖式谜</h2>
+        
+        <h3>1. 数字填空</h3>
+        
+        <div class="vertical-animation">
+            <div class="vertical-equation">
+                <div>
+                    <span class="digit">2</span>
+                    <span class="digit">5</span>
+                </div>
+                <div style="border-bottom: 2px solid #333; margin: 5px 0;">
+                    <span class="digit">+</span>
+                    <span class="digit">3</span>
+                    <span class="digit">6</span>
+                </div>
+                <div>
+                    <span class="digit">6</span>
+                    <span class="digit unknown-digit">1</span>
+                    <span class="carry">1</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>根据进位规则，个位相加超过10则向十位进1。
+        </div>
+        
+        <div class="example">
+            <div class="question">个位相加后需进位1，"☆"代表几？</div>
+            <div class="answer">1</div>
+            
+            <div class="question">个位5加6得11，"☆"代表几？</div>
+            <div class="answer">1</div>
+            
+            <div class="question">个位4加7等于"☆"，且需进位，该数字是？</div>
+            <div class="answer">1</div>
+        </div>
+        
+        <h3>2. 限制条件</h3>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>使用给定数字且只用一次，完成竖式加减法。
+        </div>
+        
+        <div class="example">
+		 <div class="question">用数字 1、2、5、7 组成如下加法竖式（每个数字只用一次），使加法成立，求“☆”应填几？</div>
+           <div class="container">
+    
+   <div style="display: flex; justify-content: center; align-items: center; margin: 2em 0;">
+  <div style="
+    font-family: Georgia, serif;
+    font-size: 32px;
+    text-align: right;
+    line-height: 1.8;
+    background: #f9f9f9;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: inline-block;
+  ">
+    <div>&nbsp;&nbsp;☆ ☆</div>
+    <div>+&nbsp;☆ ☆</div>
+    <div style="border-top: 2px solid #333; margin: -10px 0 10px 0;"></div>
+    <div>&nbsp;&nbsp;4 2</div>
+  </div>
+</div>
+            <div class="answer">略</div>
+            
+            <div class="question">用数字 3、4、6 各使用一次，填入下列减法竖式，使其成立。
+每个“☆”代表一个数字，问：被减数（第一行）中的“☆”是几？（第二排可以任何的两位数，使等式成立即可，不占用给出的数字）</div>
+
+          <div class="container">
+    
+   <div style="display: flex; justify-content: center; align-items: center; margin: 2em 0;">
+  <div style="
+    font-family: Georgia, serif;
+    font-size: 32px;
+    text-align: right;
+    line-height: 1.8;
+    background: #f9f9f9;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: inline-block;
+  ">
+    <div>&nbsp;&nbsp;☆ ☆</div>
+    <div class="middle-row">+ &nbsp; ☆</div> 
+    <div style="border-top: 2px solid #333; margin: -10px 0 10px 0;"></div>
+    <div class="denominator">28</div>
+  </div>
+</div>
+
+            <div class="answer">64</div>
+            
+            <div class="question">用数字 1、2、3 各使用一次，填入下列减法竖式，使减法成立。
+每个“☆”表示一个数字，问：被减数（第一行）的“☆”是几？</div>
+
+          <div class="container">
+    
+   <div style="display: flex; justify-content: center; align-items: center; margin: 2em 0;">
+  <div style="
+    font-family: Georgia, serif;
+    font-size: 32px;
+    text-align: right;
+    line-height: 1.8;
+    background: #f9f9f9;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: inline-block;
+  ">
+    <div>&nbsp;&nbsp;☆ ☆</div>
+    <div class="middle-row">+ &nbsp; ☆</div> 
+    <div style="border-top: 2px solid #333; margin: -10px 0 10px 0;"></div>
+    <div class="denominator"> 2</div> 
+  </div>
+</div>
+            <div class="answer">23</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>立体图形认知</h2>
+        
+        <h3>1. 顶点与棱</h3>
+        
+        <div class="cube-animation">
+            <div class="cube">
+                <div class="cube-face front">前</div>
+                <div class="cube-face back">后</div>
+                <div class="cube-face right">右</div>
+                <div class="cube-face left">左</div>
+                <div class="cube-face top">上</div>
+                <div class="cube-face bottom">下</div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>长方体有8个顶点和12条棱。
+        </div>
+        
+        <div class="example">
+            <div class="question">长方体有多少个顶点？</div>
+            <div class="answer">8个</div>
+            
+            <div class="question">长方体有多少条棱？</div>
+            <div class="answer">12条</div>
+            
+            <div class="question">立方体的顶点和棱数分别是多少？</div>
+            <div class="answer">8个顶点，12条棱</div>
+        </div>
+        
+        <h3>2. 涂色问题</h3>
+        
+        <div class="paint-animation">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr);">
+                <div class="small-cube painted-3"></div>
+                <div class="small-cube painted"></div>
+                <div class="small-cube painted-3"></div>
+                <div class="small-cube painted"></div>
+                <div class="small-cube"></div>
+                <div class="small-cube painted"></div>
+                <div class="small-cube painted-3"></div>
+                <div class="small-cube painted"></div>
+                <div class="small-cube painted-3"></div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>正方体切成小立方体后，位于顶点的小立方体有3个面被涂色（即保持了原色，切割面是没有涂色的）。
+        </div>
+        
+        <div class="example">
+            <div class="question">一个正方体锯成27个小立方体，3面涂色的小立方体有几个？</div>
+            <div class="answer">8个</div>
+            
+            <div class="question">锯成64个小立方体，顶点涂色的有几个？</div>
+            <div class="answer">8个</div>
+            
+            <div class="question">如果只涂一个面，锯成27个小立方体，几块小立方体会被涂色？</div>
+            <div class="answer">9个</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>巧填算符初步</h2>
+        
+        <h3>1. 符号插入</h3>
+        
+        <div class="operator-animation">
+            <div class="operator-equation">
+                <span>1</span>
+                <span class="operator">+</span>
+                <span>2</span>
+                <span class="operator">-</span>
+                <span>3</span>
+                <span class="operator">+</span>
+                <span>4</span>
+                <span class="operator">+</span>
+                <span>5</span>
+                <span> = 11</span>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>在数字间填"+"、"-"符号，使等式成立。
+        </div>
+        
+        <div class="example">
+            <div class="question">在数字序列1 2 3 4 5中插入"+"或"-"，使结果为11。</div>
+            <div class="answer">略</div>
+            
+            <div class="question">填符号使7 2 1 3等于7。</div>
+            <div class="answer">略</div>
+            
+            <div class="question">用"+"和"-"连接3 5 2，结果为6。</div>
+            <div class="answer">略</div>
+        </div>
+        
+        <h3>2. 混合运算</h3>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>结合乘法和除法，先乘除后加减。
+        </div>
+        
+        <div class="example">
+            <div class="question">计算9 × 3 - 8的结果。</div>
+            <div class="answer">19</div>
+            
+            <div class="question">计算7 ÷ 2 + 3的结果（保留小数）。</div>
+            <div class="answer">6.5</div>
+            
+            <div class="question">计算6 + 12 ÷ 4的结果。</div>
+            <div class="answer">9</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>整数分拆综合</h2>
+        
+        <h3>1. 限制分拆</h3>
+        
+        <div class="split-animation">
+            <div class="number-circle">10</div>
+            <div class="split-arrow">→</div>
+            <div class="split-part" style="--delay: 0">3</div>
+            <div class="split-part" style="--delay: 1">3</div>
+            <div class="split-part" style="--delay: 2">4</div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>将整数分拆成若干部分，满足每部分大小限制和数量条件。
+        </div>
+        
+        <div class="example">
+            <div class="question">10块糖分到3个盒子，每盒至少2块，有几种分法？</div>
+            <div class="answer">4种</div>
+            
+            <div class="question">8分成3部分，且各不相同，有几种分法？</div>
+            <div class="answer">3种</div>
+            
+            <div class="question">9分成3部分，每部分至少1，有几种分法？</div>
+            <div class="answer">8种</div>
+        </div>
+        
+        <h3>2. 唯一性条件</h3>
+        
+        <!-- 唯一性条件动画 -->
+        <div class="split-animation">
+            <div class="number-circle">8</div>
+            <div class="split-arrow">→</div>
+            <div class="split-part unique-part" style="--delay: 0">1</div>
+            <div class="split-part unique-part" style="--delay: 1">2</div>
+            <div class="split-part unique-part" style="--delay: 2">5</div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>分堆数量各不相同时，分法有限。
+        </div>
+        
+        <div class="example">
+            <div class="question">8分成3部分，各不相同，有几种分法？</div>
+            <div class="answer">3种</div>
+            
+            <div class="question">10分成4部分，且各部分不同，有几种分法？</div>
+            <div class="answer">5种</div>
+            
+            <div class="question">6分成3部分，各不相同，有几种分法？</div>
+            <div class="answer">2种</div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>妙用倒推法</h2>
+        
+        <h3>1. 逆推计算</h3>
+        
+        <div class="reverse-animation">
+            <div class="reverse-steps">
+                <div class="reverse-step" style="--delay: 0">某数先加6再乘6，最后得1</div>
+                <div class="reverse-arrow">↑</div>
+                <div class="reverse-step" style="--delay: 1">1 ÷ 6 = 1/6</div>
+                <div class="reverse-arrow">↑</div>
+                <div class="reverse-step" style="--delay: 2">1/6 - 6 = -35/6</div>
+                <div class="reverse-arrow">↑</div>
+                <div class="reverse-box">原数</div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>根据结果逆向还原原数，逐步反向运算。
+        </div>
+        
+        <div class="example">
+            <div class="question">某数先加6再乘6，最后得1，原数是多少？</div>
+            <div class="answer">1</div>
+            
+            <div class="question">一个数乘以3再减4得11，原数是多少？</div>
+            <div class="answer">5</div>
+            
+            <div class="question">一个数减5后乘2，结果为16，原数是多少？</div>
+            <div class="answer">13</div>
+        </div>
+        
+        <h3>2. 分步还原</h3>
+        
+        <div class="reverse-animation">
+            <div class="reverse-steps">
+                <div class="reverse-step" style="--delay: 0">豆豆最后剩6元</div>
+                <div class="reverse-arrow">↑</div>
+                <div class="reverse-step" style="--delay: 1">先花4元买苹果</div>
+                <div class="reverse-arrow">↑</div>
+                <div class="reverse-step" style="--delay: 2">原有钱: 6 + 4 = 10元</div>
+                <div class="reverse-arrow">↑</div>
+                <div class="reverse-box">10元</div>
+            </div>
+        </div>
+        
+        <div class="rule">
+            <strong>运算法则：</strong>分步推算，逐层还原各环节数据。
+        </div>
+        
+        <div class="example">
+            <div class="question">豆豆最后剩6元，先花4元买苹果，原有多少钱？</div>
+            <div class="answer">20元</div>
+            
+            <div class="question">小明买东西后还剩15元，花费了5元，原有多少钱？</div>
+            <div class="answer">20元</div>
+            
+            <div class="question">一袋苹果被吃掉7个，剩下13个，原来有多少个？</div>
+            <div class="answer">20个</div>
+        </div>
+    </div>
+</body>
+</html>
