@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>加减法巧算二</title>
+    <title>趣味数学7</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -46,13 +46,46 @@
             color: #e74c3c;
             margin-top: 12px;
             font-size: 0.95em;
+            cursor: pointer;
+        }
+        /* 答案容器样式 */
+        .answer-container {
+            background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+            border: 1px solid #d1fae5;
+            border-radius: 8px;
+            padding: 5px 15px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .answer-container:hover {
+            background: linear-gradient(135deg, #dcffe4 0%, #c6f6d5 100%);
+            transform: translateX(5px);
+        }
+        .answer-prompt {
+            color: #10b981;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
         }
         .answer {
             color: #27ae60;
-            margin-bottom: 12px;
-            padding-left: 15px;
-            border-left: 2px solid #2ecc71;
-            font-size: 0.95em;
+            margin-left: 20px;
+            padding: 10px 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            border-radius: 0 8px 8px 0;
+            display: none;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease;
+        }
+        .show-answer .answer {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .rule {
             background-color: #f1f9fe;
@@ -119,49 +152,6 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.6; }
-        }
-        
-        /* 连续运算动画 */
-        .subtraction-animation {
-            width: 100%;
-            height: 120px;
-            background-color: #f5f7fa;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .subtraction-equation {
-            font-size: 1.5em;
-            display: flex;
-            align-items: center;
-        }
-        
-        .minus-sign {
-            color: #e74c3c;
-            margin: 0 5px;
-            animation: shake 1s infinite;
-        }
-        
-        .sum-highlight {
-            color: #27ae60;
-            font-weight: bold;
-            animation: glow 2s infinite;
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-3px); }
-            75% { transform: translateX(3px); }
-        }
-        
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 5px rgba(39, 174, 96, 0.5); }
-            50% { text-shadow: 0 0 10px rgba(39, 174, 96, 0.8); }
         }
         
         /* 平面图形动画 */
@@ -308,60 +298,6 @@
             50% { opacity: 0.7; transform: scale(1.2); }
         }
         
-        /* 竖式谜题动画 */
-        .vertical-animation {
-            width: 100%;
-            height: 150px;
-            background-color: #f5f7fa;
-            border-radius: 8px;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .vertical-equation {
-            font-family: monospace;
-            font-size: 1.5em;
-            text-align: right;
-            margin: 10px;
-        }
-        
-        .digit {
-            display: inline-block;
-            width: 30px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .unknown-digit {
-            color: #e74c3c;
-            font-weight: bold;
-            animation: digitFlash 2s infinite;
-        }
-        
-        .carry {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8em;
-            color: #27ae60;
-            animation: carryBounce 1.5s infinite;
-        }
-        
-        @keyframes digitFlash {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        @keyframes carryBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-5px); }
-        }
-        
         /* 立体图形动画 */
         .cube-animation {
             width: 100%;
@@ -461,192 +397,16 @@
             0%, 100% { box-shadow: 0 0 0 3px #e74c3c; }
             50% { box-shadow: 0 0 0 6px #e74c3c; }
         }
-        
-        /* 巧填算符动画 */
-        .operator-animation {
-            width: 100%;
-            height: 120px;
-            background-color: #f5f7fa;
-            border-radius: 8px;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .operator-equation {
-            font-size: 1.5em;
-            display: flex;
-            align-items: center;
-        }
-        
-        .operator {
-            color: #e74c3c;
-            font-weight: bold;
-            margin: 0 5px;
-            animation: operatorChange 3s infinite;
-        }
-        
-        @keyframes operatorChange {
-            0% { content: "+"; }
-            50% { content: "-"; }
-            100% { content: "+"; }
-        }
-        
-        /* 整数分拆动画 */
-        .split-animation {
-            width: 100%;
-            height: 150px;
-            background-color: #f5f7fa;
-            border-radius: 8px;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .number-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: #3498db;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1.5em;
-            position: relative;
-            animation: numberPulse 2s infinite;
-        }
-        
-        .split-arrow {
-            font-size: 1.5em;
-            margin: 0 10px;
-            color: #e74c3c;
-            animation: arrowBounce 1.5s infinite;
-        }
-        
-        .split-part {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #2ecc71;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            margin: 0 5px;
-            animation: partFloat 3s infinite;
-            animation-delay: calc(var(--delay) * 0.3s);
-        }
-        
-        .unique-part {
-            background-color: #f39c12;
-        }
-        
-        @keyframes numberPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        @keyframes arrowBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
-        @keyframes partFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        /* 倒推法动画 */
-        .reverse-animation {
-            width: 100%;
-            height: 200px;
-            background-color: #f5f7fa;
-            border-radius: 8px;
-            margin: 15px 0;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .reverse-steps {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .reverse-step {
-            margin: 5px;
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: white;
-            border-radius: 15px;
-            position: relative;
-            animation: stepHighlight 4s infinite;
-            animation-delay: calc(var(--delay) * 0.5s);
-            min-width: 200px;
-            text-align: center;
-        }
-        
-        .reverse-arrow {
-            font-size: 1.5em;
-            color: #e74c3c;
-            animation: arrowFlip 2s infinite;
-            margin: 5px 0;
-        }
-        
-        .reverse-box {
-            width: 60px;
-            height: 60px;
-            background-color: #2ecc71;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1.2em;
-            border-radius: 10px;
-            animation: boxPulse 2s infinite;
-        }
-        
-        @keyframes stepHighlight {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.9; }
-        }
-        
-        @keyframes arrowFlip {
-            0% { transform: rotateY(0); }
-            50% { transform: rotateY(180deg); }
-            100% { transform: rotateY(360deg); }
-        }
-        
-        @keyframes boxPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
     </style>
 </head>
 <body>
     <h1>趣味数学7</h1>
-    
-    
     
     <div class="section">
         <h2>平面图形认知</h2>
         
         <h3>图形分类</h3>
         
-        <!-- 修正后的图形分类动画 -->
         <div class="shape-animation">
             <div class="triangle">
                 <div class="right-angle"></div>
@@ -661,13 +421,22 @@
         
         <div class="example">
             <div class="question">一个三角形的两条边长分别为5厘米和5厘米，第三条边长为6厘米。这个三角形是等腰三角形吗？为什么？</div>
-            <div class="answer">是</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">是</div>
+            </div>
             
             <div class="question">一个直角三角形的两条直角边分别为3厘米和4厘米，求斜边的长度。</div>
-            <div class="answer">5cm</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">5cm</div>
+            </div>
             
             <div class="question">小明用一根24厘米的铁丝围成一个等腰三角形，如果底边长是10厘米，那么每条腰的长度是多少？</div>
-            <div class="answer">7cm</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">7cm</div>
+            </div>
         </div>
         
         <h3>周长计算</h3>
@@ -686,13 +455,22 @@
         
         <div class="example">
             <div class="question">一个长方形的长是1.2米，宽是80厘米，求它的周长（单位：厘米）</div>
-            <div class="answer">400cm</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">400cm</div>
+            </div>
             
             <div class="question">一个长方形的长是x+3，宽是x−1，用含x的式子表示它的周长。</div>
-            <div class="answer">4x + 4</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">4x + 4</div>
+            </div>
             
             <div class="question">小明用一根40厘米的铁丝围成一个长方形，如果长方形的宽是8厘米，长比宽多多少厘米？</div>
-            <div class="answer">4cm</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">4cm</div>
+            </div>
         </div>
     </div>
     
@@ -728,13 +506,22 @@
         
         <div class="example">
             <div class="question">一个 3×3 的点阵中，共能组成多少个正方形？（包括斜放的正方形）</div>
-            <div class="answer">20个</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">20个</div>
+            </div>
             
             <div class="question">正六边形旋转 60° 后与原图形重叠，共有多少种不同的旋转对称位置？</div>
-            <div class="answer">6种</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">6种</div>
+            </div>
             
             <div class="question">一个五边形被两条对角线分割，共形成多少个三角形？</div>
-            <div class="answer">3个</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">3个</div>
+            </div>
         </div>
         
         <h3>包含特定元素</h3>
@@ -744,19 +531,25 @@
         </div>
         
         <div class="example">
-            <div class="question">一个 4×4 网格中，每行都有 2 个“★”，其余是空格。
-共有多少个格子里有“★”？</div>
-            <div class="answer">8个</div>
+            <div class="question">一个 4×4 网格中，每行都有 2 个“★”，其余是空格。共有多少个格子里有“★”？</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">8个</div>
+            </div>
             
             <div class="question">若每行有2个"★"，4行共多少含"★"的正方形？</div>
-            <div class="answer">8个。</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">8个。</div>
+            </div>
             
-            <div class="question">一个由小三角形拼成的大图，有些三角形中有“★”。
-其中一个三角形中同时包含了3个“★”，共有27个。这样的三角形有几个？</div>
-            <div class="answer">9个</div>
+            <div class="question">一个由小三角形拼成的大图，有些三角形中有“★”。其中一个三角形中同时包含了3个“★”，共有27个。这样的三角形有几个？</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">9个</div>
+            </div>
         </div>
     </div>
-    
     
     <div class="section">
         <h2>立体图形认知</h2>
@@ -780,13 +573,22 @@
         
         <div class="example">
             <div class="question">一个长方体的长、宽、高分别为 5 cm、3 cm、4 cm，求所有棱的总长度。</div>
-            <div class="answer">48cm</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">48cm</div>
+            </div>
             
             <div class="question">一个长方体的 12 条棱中，有多少组互相平行的棱？</div>
-            <div class="answer">3组</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">3组</div>
+            </div>
             
             <div class="question">用铁丝焊接一个长方体框架，长 10 dm，宽 6 dm，高 8 dm。如果接口处需额外预留 2 dm 铁丝，求至少需要多长的铁丝？</div>
-            <div class="answer">112dm</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">112dm</div>
+            </div>
         </div>
         
         <h3>2. 涂色问题</h3>
@@ -811,17 +613,35 @@
         
         <div class="example">
             <div class="question">一个棱长为3的大正方体被切成27个棱长为1的小立方体。求有多少个小立方体有3个面被涂色？</div>
-            <div class="answer">8个</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">8个</div>
+            </div>
             
             <div class="question">一个棱长为5的大正方体被切成125个棱长为1的小立方体。求有多少个小立方体只有1个面被涂色？</div>
-            <div class="answer">54个</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">54个</div>
+            </div>
             
             <div class="question">一个棱长为6的大正方体被切成216个棱长为1的小立方体。求有多少个小立方体完全没有被涂色？</div>
-            <div class="answer">64个</div>
+            <div class="answer-container">
+                <div class="answer-prompt">✨点击显示答案</div>
+                <div class="answer">64个</div>
+            </div>
         </div>
     </div>
     
-   
-    </div>
+    <script>
+        // 添加点击显示答案功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const containers = document.querySelectorAll('.answer-container');
+            containers.forEach(container => {
+                container.addEventListener('click', function() {
+                    this.classList.toggle('show-answer');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
